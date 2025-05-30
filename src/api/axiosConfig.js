@@ -1,9 +1,11 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://gestion-estudiantes-backend-production.up.railway.app',
-  withCredentials: true, // <- importante si usás cookies
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true // 👈 NECESARIO para enviar cookies
 });
+
+export default instance;
