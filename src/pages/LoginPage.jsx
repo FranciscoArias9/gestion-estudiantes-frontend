@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../api/authService';
 import '../styles/LoginPage.css';
-import Navbar from '../components/NavBar';
+import Navbar from '../components/Navbar';
 
 const LoginPage = () => {
   const [correo, setCorreo] = useState('');
