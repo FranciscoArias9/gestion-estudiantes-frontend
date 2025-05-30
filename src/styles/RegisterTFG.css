@@ -1,0 +1,72 @@
+/* RegisterTFG.css */
+
+.register-tfg-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f4f6f8;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .register-tfg-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #002060;
+  }
+  
+  .register-tfg-content {
+    display: flex;
+    justify-content: center;
+    padding: 20px 40px;
+    flex-wrap: wrap;
+  }
+  
+  .register-tfg-form {
+    width: 100%;
+    max-width: 800px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .register-tfg-form input,
+  .register-tfg-form select,
+  .register-tfg-form textarea {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .register-tfg-form textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+  
+  .register-btn {
+    background-color: #002060;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+    transition: background-color 0.2s;
+  }
+  
+  .register-btn:hover {
+    background-color: #003080;
+  }
+  

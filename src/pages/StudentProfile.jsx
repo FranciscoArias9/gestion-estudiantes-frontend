@@ -1,0 +1,138 @@
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Navbar from '../components/NavBar';
+import axios from '../api/axiosConfig';
+import Select from 'react-select';
+import '../styles/RegisterStudent.css';
+
+const StudentProfile = () => {
+  const { id } = useParams();
+  const [form, setForm] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [fotoUrl, setFotoUrl] = useState(null);
+
+  useEffect(() => {
+    axios.get(`/estudiantes/${id}`).then(res => {
+      const estudiante = res.data;
+      if (!Array.isArray(estudiante.gradoAcademico)) {
+        estudiante.gradoAcademico = [];
+      }
+      setForm(estudiante);
+      setFotoUrl(estudiante.fotoUrl);
+    });
+  }, [id]);
+
+  if (!form) return <p>Cargando...</p>;
+
+  const handleChange = (e) => {
+    const { name, value, type } = e.target;
+    let newValue = type === 'number' ? parseInt(value) || '' : value;
+    setForm({ ...form, [name]: newValue });
+  };
+
+  const handleSelectChange = (selectedOptions) => {
+    const selectedValues = selectedOptions.map(opt => opt.value);
+    setForm({ ...form, gradoAcademico: selectedValues });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(`/estudiantes/${id}`, form);
+      alert('Perfil actualizado con éxito');
+      setEditMode(false);
+    } catch (err) {
+      console.error(err);
+      alert('Error al actualizar');
+    }
+  };
+
+  const renderInput = (name, label, type = 'text') => (
+    <div className="row">
+      <label>{label}</label>
+      <input name={name} type={type} value={form[name]} onChange={handleChange} disabled={!editMode} />
+    </div>
+  );
+
+  const renderTextarea = (name, label) => (
+    <div className="row">
+      <label>{label}</label>
+      <textarea name={name} value={form[name]} onChange={handleChange} disabled={!editMode} />
+    </div>
+  );
+
+  return (
+    <div className="register-container">
+      <Navbar />
+      <h2 className="register-title">Perfil del Estudiante</h2>
+      <div className="register-content">
+        <form onSubmit={handleSubmit} className="register-form">
+          <div className="form-grid">
+            {renderInput('nombre', 'Nombre')}
+            {renderInput('apellidos', 'Apellidos')}
+            {renderInput('numero_identificacion', 'Número de Identificación')}
+            {renderInput('correo', 'Correo', 'email')}
+            {renderInput('telefono', 'Teléfono')}
+            {renderInput('nacionalidad', 'Nacionalidad')}
+            {renderInput('universidad_origen', 'Universidad de Origen')}
+            {renderInput('programa_maestria', 'Programa de Maestría')}
+            {renderInput('tipo_maestria', 'Tipo de Maestría')}
+            {renderInput('anio_admision', 'Año de Admisión', 'number')}
+            {renderInput('numero_promocion', 'Número de Promoción', 'number')}
+            {renderInput('modalidad', 'Modalidad')}
+            {renderInput('lugar_residencia', 'Lugar de Residencia')}
+            {renderInput('lugar_trabajo', 'Lugar de Trabajo')}
+            {renderInput('funcion_trabajo', 'Función en el Trabajo')}
+            {renderInput('carreras_universitarias', 'Carreras Universitarias')}
+            {renderInput('tipo_empadronamiento', 'Tipo de Empadronamiento')}
+            <div className="row">
+              <label>Grado Académico</label>
+              <Select
+                isMulti
+                name="gradoAcademico"
+                options={[
+                  { value: 'Bachiller universitario', label: 'Bachiller universitario' },
+                  { value: 'Licenciatura', label: 'Licenciatura' },
+                  { value: 'Maestría', label: 'Maestría' }
+                ]}
+                classNamePrefix="select"
+                className="select-container"
+                value={form.gradoAcademico.map(val => ({ value: val, label: val }))}
+                onChange={handleSelectChange}
+                isDisabled={!editMode}
+              />
+            </div>
+            {renderTextarea('comentario_exoneracion', 'Comentario de Exoneración')}
+            {renderTextarea('otras_observaciones', 'Otras Observaciones')}
+            {renderTextarea('notas_adicionales', 'Notas Adicionales')}
+            {renderTextarea('anotaciones_estado', 'Anotaciones del Estado')}
+            {renderInput('estado_estudiante', 'Estado del Estudiante')}
+            {renderInput('motivacion_objetivos', 'Motivación y Objetivos', 'number')}
+            {renderInput('experiencia_previa', 'Experiencia Previa', 'number')}
+            {renderInput('adaptabilidad', 'Adaptabilidad', 'number')}
+            {renderInput('comunicacion', 'Comunicación', 'number')}
+          </div>
+
+          {fotoUrl && (
+            <div className="foto-estudiante">
+              <img src={`http://localhost:8080/estudiantes/fotos/${fotoUrl}`} alt="Foto del estudiante" />
+            </div>
+          )}
+
+          {editMode ? (
+            <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+              <button type="submit" className="btn-update">Guardar</button>
+              <button type="button" onClick={() => setEditMode(false)} className="btn-cancel">Cancelar</button>
+            </div>
+          ) : (
+            <button type="button" onClick={() => setEditMode(true)} className="btn-edit">
+              Editar
+            </button>
+          )}
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default StudentProfile;
