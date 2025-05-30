@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Navbar from '../components/NavBar';
+import Navbar from '../components/Navbar';
 import axios from '../api/axiosConfig';
 import '../styles/RegisterStudent.css';
 import Select from 'react-select';
