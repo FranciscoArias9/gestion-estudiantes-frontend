@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getEstudiantes } from '../api/estudianteService';
 import StudentCard from '../components/StudentCard';
-import Navbar from '../components/NavBar';
+import Navbar from '../components/Navbar';
 import '../styles/StudentsList.css';
 
 const StudentsList = () => {
