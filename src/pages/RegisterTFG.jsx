@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from '../api/axiosConfig';
-import Navbar from '../components/NavBar';
+import Navbar from '../components/Navbar';
 import '../styles/RegisterTFG.css';
 
 const RegisterTFG = () => {
