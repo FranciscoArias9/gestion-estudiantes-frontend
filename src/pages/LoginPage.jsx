@@ -27,7 +27,7 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/auth/recuperar', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/recuperar`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({ correo }),
