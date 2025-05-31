@@ -6,9 +6,6 @@ import '../styles/RegisterTFG.css';
 const RegisterTFG = () => {
   const [estudiantes, setEstudiantes] = useState([]);
   const [selectedStudentId, setSelectedStudentId] = useState('');
-  const [nuevoEvaluador, setNuevoEvaluador] = useState('');
-  const [evaluadores, setEvaluadores] = useState([]);
-
   const [form, setForm] = useState({
     estudianteId: '',
     nombreEstudiante: '',
@@ -17,12 +14,14 @@ const RegisterTFG = () => {
     tema: '',
     modalidadTFG: '',
     fechaAprobacion: '',
-    equipoAsesor: '',
+    equipoAsesor: [],
     fechaVencimiento: '',
     status: '',
     notasSeguimiento: '',
     tipo_maestria: ''
   });
+
+  const [nuevoAsesor, setNuevoAsesor] = useState('');
 
   useEffect(() => {
     axios.get('/estudiantes').then(res => {
@@ -50,16 +49,22 @@ const RegisterTFG = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleAgregarEvaluador = () => {
-    if (nuevoEvaluador.trim() !== '') {
-      setEvaluadores([...evaluadores, nuevoEvaluador.trim()]);
-      setNuevoEvaluador('');
+  const agregarAsesor = () => {
+    if (nuevoAsesor.trim() === '') return;
+    if (!form.equipoAsesor.includes(nuevoAsesor.trim())) {
+      setForm({
+        ...form,
+        equipoAsesor: [...form.equipoAsesor, nuevoAsesor.trim()]
+      });
+      setNuevoAsesor('');
     }
   };
 
-  const handleEliminarEvaluador = (index) => {
-    const nuevos = evaluadores.filter((_, i) => i !== index);
-    setEvaluadores(nuevos);
+  const eliminarAsesor = (nombre) => {
+    setForm({
+      ...form,
+      equipoAsesor: form.equipoAsesor.filter(a => a !== nombre)
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -71,7 +76,7 @@ const RegisterTFG = () => {
       tipo_maestria: form.tipo_maestria,
       modalidadTfg: form.modalidadTFG,
       fechaAprobacion: form.fechaAprobacion,
-      equipoAsesor: evaluadores.join(', '),
+      equipoAsesor: form.equipoAsesor.join(', '),
       fechaVencimiento: form.fechaVencimiento,
       status: form.status,
       notasSeguimiento: form.notasSeguimiento,
@@ -98,28 +103,90 @@ const RegisterTFG = () => {
       <Navbar />
       <h2 className="register-title">Registrar nuevo TFG</h2>
       <form onSubmit={handleSubmit} className="register-form">
-        {/* ... otros campos ... */}
+        <label>Estudiante</label>
+        <select value={selectedStudentId} onChange={handleStudentChange} required>
+          <option value="">Seleccione estudiante</option>
+          {estudiantes.map((e) => (
+            <option key={e.id} value={e.id}>{e.nombre} {e.apellidos}</option>
+          ))}
+        </select>
+
+        <label>Correo electrónico</label>
+        <input name="correo" value={form.correo} readOnly placeholder="Correo" />
+
+        <label>Teléfono</label>
+        <input name="telefono" value={form.telefono} readOnly placeholder="Teléfono" />
+
+        <label>Modalidad de la Maestría</label>
+        <input name="tipo_maestria" value={form.tipo_maestria} readOnly placeholder="Modalidad de la Maestría" />
+
+        <label>Tema del TFG</label>
+        <input name="tema" value={form.tema} onChange={handleChange} placeholder="Tema del TFG" required />
+
+        <label>Modalidad del TFG</label>
+        <select name="modalidadTFG" value={form.modalidadTFG} onChange={handleChange} required>
+          <option value="">Seleccione una modalidad</option>
+          <option value="Tesis">Tesis</option>
+          <option value="Proyecto">Proyecto</option>
+          <option value="Seminario">Seminario</option>
+          <option value="Práctica">Práctica</option>
+        </select>
+
+        <label>Fecha de aprobación</label>
+        <input name="fechaAprobacion" type="date" value={form.fechaAprobacion} onChange={handleChange} required />
 
         <label>Equipo asesor</label>
-        <div className="evaluador-input">
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           <input
             type="text"
-            value={nuevoEvaluador}
-            onChange={(e) => setNuevoEvaluador(e.target.value)}
-            placeholder="Nombre del evaluador"
+            value={nuevoAsesor}
+            onChange={(e) => setNuevoAsesor(e.target.value)}
+            placeholder="Nombre del asesor"
           />
-          <button type="button" onClick={handleAgregarEvaluador}>Agregar</button>
+          <button type="button" onClick={agregarAsesor}>Añadir</button>
         </div>
-
-        <div className="evaluadores-list">
-          {evaluadores.map((evalName, idx) => (
-            <span className="evaluador-chip" key={idx}>
-              {evalName} <button type="button" onClick={() => handleEliminarEvaluador(idx)}>x</button>
-            </span>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', marginTop: '10px' }}>
+          {form.equipoAsesor.map((asesor, index) => (
+            <div key={index} style={{
+              backgroundColor: '#e0e0e0',
+              borderRadius: '16px',
+              padding: '4px 10px',
+              display: 'flex',
+              alignItems: 'center'
+            }}>
+              {asesor}
+              <button
+                type="button"
+                onClick={() => eliminarAsesor(asesor)}
+                style={{
+                  marginLeft: '8px',
+                  background: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontWeight: 'bold'
+                }}
+              >
+                ×
+              </button>
+            </div>
           ))}
         </div>
 
-        {/* ... otros campos y botón de submit ... */}
+        <label>Fecha de vencimiento</label>
+        <input name="fechaVencimiento" type="date" value={form.fechaVencimiento} onChange={handleChange} />
+
+        <label>Estado del TFG</label>
+        <select name="status" value={form.status} onChange={handleChange} required>
+          <option value="">Seleccione un estado</option>
+          <option value="No solicitado">No solicitado</option>
+          <option value="Vigente">Vigente</option>
+          <option value="Vigente con prórroga">Vigente con prórroga</option>
+          <option value="Vencido">Vencido</option>
+        </select>
+
+        <label>Notas de seguimiento</label>
+        <textarea name="notasSeguimiento" value={form.notasSeguimiento} onChange={handleChange} placeholder="Notas de seguimiento" />
+
         <button type="submit" className="register-btn">Registrar TFG</button>
       </form>
     </div>
