@@ -102,7 +102,7 @@ const RegisterTFG = () => {
     <div className="register-container">
       <Navbar />
       <h2 className="register-title">Registrar nuevo TFG</h2>
-      <form onSubmit={handleSubmit} className="register-form">
+      <form onSubmit={handleSubmit} className="register-tfg-form">
         <label>Estudiante</label>
         <select value={selectedStudentId} onChange={handleStudentChange} required>
           <option value="">Seleccione estudiante</option>
