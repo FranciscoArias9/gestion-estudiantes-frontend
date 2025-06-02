@@ -115,7 +115,7 @@ const StudentProfile = () => {
 
           {fotoUrl && (
             <div className="foto-estudiante">
-              <img src={`http://localhost:8080/estudiantes/fotos/${fotoUrl}`} alt="Foto del estudiante" />
+              <img src={`https://gestion-estudiantes-backend-production.up.railway.app/estudiantes/fotos/${fotoUrl}`} alt="Foto del estudiante" />
             </div>
           )}
 
