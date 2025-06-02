@@ -114,10 +114,18 @@ const StudentProfile = () => {
           </div>
 
           {fotoUrl && (
-            <div className="foto-estudiante">
-              <img src={`https://gestion-estudiantes-backend-production.up.railway.app/estudiantes/fotos/${fotoUrl}`} alt="Foto del estudiante" />
-            </div>
-          )}
+  <div className="foto-estudiante">
+    <img
+      src={
+        fotoUrl.startsWith('http')
+          ? fotoUrl
+          : `https://gestion-estudiantes-backend-production.up.railway.app/estudiantes/fotos/${fotoUrl}`
+      }
+      alt="Foto del estudiante"
+    />
+  </div>
+)}
+
 
           {editMode ? (
             <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
