@@ -133,7 +133,7 @@ const RegisterStudent = () => {
               <option value="Profesional">Profesional</option>
             </select>
             <input name="anio_admision" type="number" value={form.anio_admision} onChange={handleChange} placeholder="Año de admisión" />
-            <input name="numero_promocion" type="number" value={form.numero_promocion} onChange={handleChange} placeholder="Número de promoción" />
+            <input name="numero_promocion" value={form.numero_promocion} onChange={handleChange} placeholder="Número de promoción" />
             <select name="modalidad" value={form.modalidad} onChange={handleChange}>
               <option value="">Seleccione modalidad</option>
               <option value="presencial">Presencial</option>
