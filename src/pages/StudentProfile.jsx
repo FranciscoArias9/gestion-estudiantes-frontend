@@ -168,12 +168,18 @@ const StudentProfile = () => {
 
           {editMode ? (
             <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-              <button type="submit" className="btn-update">Guardar</button>
-              <button type="button" onClick={() => setEditMode(false)} className="btn-cancel">Cancelar</button>
-              <button type="button" onClick={handleDelete} className="btn-delete">
-      Eliminar
-    </button>
-            </div>
+  {editMode ? (
+    <>
+      <button type="submit" className="btn-update">Guardar</button>
+      <button type="button" onClick={() => setEditMode(false)} className="btn-cancel">Cancelar</button>
+    </>
+  ) : (
+    <button type="button" onClick={() => setEditMode(true)} className="btn-edit">Editar</button>
+  )}
+
+  {/* Este botón siempre se muestra */}
+  <button type="button" onClick={handleDelete} className="btn-delete">Eliminar</button>
+</div>
           ) : (
             <button type="button" onClick={() => setEditMode(true)} className="btn-edit">
               Editar
