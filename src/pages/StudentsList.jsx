@@ -34,8 +34,8 @@ const StudentsList = () => {
       <div className="students-header">
         <h2>Lista de alumnos y postulantes</h2>
         <div className="students-actions">
-          <button className="export-btn" onClick={handleExportPDF}>📄 Exportar como PDF</button>
-          <button className="export-btn" onClick={handleExportExcel}>📊 Exportar como Excel</button>
+         {/* <button className="export-btn" onClick={handleExportPDF}>📄 Exportar como PDF</button>
+<button className="export-btn" onClick={handleExportExcel}>📊 Exportar como Excel</button> */}
 
           <select
             className="search-bar"
