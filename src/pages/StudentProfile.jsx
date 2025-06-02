@@ -61,6 +61,20 @@ const StudentProfile = () => {
       alert('Error al actualizar');
     }
   };
+  const handleDelete = async () => {
+  const confirmacion = window.confirm("¿Estás seguro de que deseas eliminar este estudiante? Esta acción no se puede deshacer.");
+  if (!confirmacion) return;
+
+  try {
+    await axios.delete(`/estudiantes/${id}`);
+    alert("Estudiante eliminado con éxito.");
+    window.location.href = "/estudiantes"; // o usá navigate si tenés react-router v6+
+  } catch (error) {
+    console.error(error);
+    alert("Hubo un error al eliminar el estudiante.");
+  }
+};
+
 
   const renderInput = (name, label, type = 'text') => (
     <div className="row">
