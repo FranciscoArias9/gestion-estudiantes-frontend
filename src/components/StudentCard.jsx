@@ -5,16 +5,19 @@ const StudentCard = ({ estudiante }) => {
   const apellido1 = apellidosSplit[0] || '';
   const apellido2 = apellidosSplit.slice(1).join(' ') || '';
 
+  
+
   return (
     <tr>
       <td>
         {estudiante.fotoUrl ? (
           <Link to={`/estudiantes/${estudiante.id}`}>
-            <img
-              src={`http://localhost:8080/estudiantes/fotos/${estudiante.fotoUrl}`}
-              alt="Foto del estudiante"
-              className="student-photo"
-            />
+            <<img
+  src={`${import.meta.env.VITE_BACKEND_URL}/estudiantes/fotos/${estudiante.fotoUrl}`}
+  alt="Foto del estudiante"
+  className="student-photo"
+/>
+
           </Link>
         ) : (
           <span>Sin foto</span>
