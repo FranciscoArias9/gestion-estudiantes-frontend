@@ -6,14 +6,14 @@ import Navbar from '../components/Navbar';
 const TfgDetail = () => {
   const { id } = useParams();
   const [tfg, setTfg] = useState(null);
-  const [originalTfg, setOriginalTfg] = useState(null); // para restaurar si se cancela
+  const [originalTfg, setOriginalTfg] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     axios.get(`/tfgs/${id}`).then((res) => {
       setTfg(res.data);
-      setOriginalTfg(res.data); // guarda una copia para restaurar si se cancela
+      setOriginalTfg(res.data);
     });
   }, [id]);
 
@@ -30,7 +30,7 @@ const TfgDetail = () => {
       await axios.put(`/tfgs/${id}`, tfg);
       alert('Cambios guardados');
       setIsEditing(false);
-      setOriginalTfg(tfg); // actualiza copia original
+      setOriginalTfg(tfg);
     } catch (err) {
       console.error(err);
       alert('Error al guardar');
@@ -39,8 +39,24 @@ const TfgDetail = () => {
   };
 
   const handleCancel = () => {
-    setTfg(originalTfg); // restaura el original
+    setTfg(originalTfg);
     setIsEditing(false);
+  };
+
+  const handleDelete = async () => {
+    const confirm = window.confirm('¿Estás seguro de que deseas eliminar este TFG? Esta acción no se puede deshacer.');
+    if (!confirm) return;
+
+    setLoading(true);
+    try {
+      await axios.delete(`/tfgs/${id}`);
+      alert('TFG eliminado correctamente.');
+      window.location.href = '/tfgs'; // Cambiá si tu ruta es diferente
+    } catch (err) {
+      console.error(err);
+      alert('Error al eliminar el TFG.');
+    }
+    setLoading(false);
   };
 
   if (!tfg) return <div>Cargando...</div>;
@@ -128,9 +144,25 @@ const TfgDetail = () => {
           <p><strong>{tfg.notasSeguimiento}</strong></p>
         )}
 
-        <div style={{ marginTop: '1rem' }}>
+        <div style={{ marginTop: '1rem', display: 'flex', gap: '10px' }}>
           {!isEditing ? (
-            <button onClick={() => setIsEditing(true)}>Editar</button>
+            <>
+              <button onClick={() => setIsEditing(true)}>Editar</button>
+              <button
+                onClick={handleDelete}
+                style={{
+                  backgroundColor: '#e63946',
+                  color: 'white',
+                  border: 'none',
+                  padding: '8px 16px',
+                  borderRadius: '5px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer'
+                }}
+              >
+                Eliminar
+              </button>
+            </>
           ) : (
             <>
               <button onClick={handleSave} disabled={loading}>
