@@ -37,7 +37,7 @@ const StudentCard = ({ estudiante }) => {
       <td>{estudiante.correo}</td>
       <td>{estudiante.estado_estudiante}</td>
       <td>{estudiante.otras_observaciones}</td>
-      <td>{estudiante.gradoAcademico?.join(', ')}</td>
+      <td>{estudiante.grado_academico}</td>
       <td>{estudiante.ultimoCampoModificado || '—'}</td>
       <td>{estudiante.fechaUltimoCambio ? new Date(estudiante.fechaUltimoCambio).toLocaleString() : '—'}</td>
     </tr>
