@@ -5,7 +5,8 @@ const StudentCard = ({ estudiante }) => {
   const apellido1 = apellidosSplit[0] || '';
   const apellido2 = apellidosSplit.slice(1).join(' ') || '';
 
-  
+  console.log(import.meta.env.VITE_API_URL);
+
 
   return (
     <tr>
