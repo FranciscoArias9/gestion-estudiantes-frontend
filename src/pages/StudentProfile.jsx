@@ -167,7 +167,7 @@ const StudentProfile = () => {
           )}
 
           {editMode ? (
-            <<div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+            <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
   {editMode ? (
     <>
       <button type="submit" className="btn-update">Guardar</button>
