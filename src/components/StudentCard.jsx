@@ -12,7 +12,7 @@ const StudentCard = ({ estudiante }) => {
       <td>
         {estudiante.fotoUrl ? (
           <Link to={`/estudiantes/${estudiante.id}`}>
-            <<img
+            <img
   src={`${import.meta.env.VITE_BACKEND_URL}/estudiantes/fotos/${estudiante.fotoUrl}`}
   alt="Foto del estudiante"
   className="student-photo"
