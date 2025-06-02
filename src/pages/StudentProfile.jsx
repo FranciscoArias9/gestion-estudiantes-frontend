@@ -167,17 +167,15 @@ const StudentProfile = () => {
           )}
 
           {editMode ? (
-            <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+            <<div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
   {editMode ? (
     <>
       <button type="submit" className="btn-update">Guardar</button>
       <button type="button" onClick={() => setEditMode(false)} className="btn-cancel">Cancelar</button>
     </>
-  ) : (
-    <button type="button" onClick={() => setEditMode(true)} className="btn-edit">Editar</button>
-  )}
+  ) : null}
 
-  {/* Este botón siempre se muestra */}
+  <button type="button" onClick={() => setEditMode(true)} className="btn-edit">Editar</button>
   <button type="button" onClick={handleDelete} className="btn-delete">Eliminar</button>
 </div>
           ) : (
