@@ -13,7 +13,7 @@ const StudentCard = ({ estudiante }) => {
         {estudiante.fotoUrl ? (
           <Link to={`/estudiantes/${estudiante.id}`}>
             <img
-  src={`${import.meta.env.VITE_BACKEND_URL}/estudiantes/fotos/${estudiante.fotoUrl}`}
+  src={`${import.meta.env.VITE_API_URL}/estudiantes/fotos/${estudiante.fotoUrl}`}
   alt="Foto del estudiante"
   className="student-photo"
 />
