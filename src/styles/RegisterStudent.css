@@ -114,3 +114,19 @@ select[multiple] {
   border: 1px solid #ccc;
 }
 
+.btn-delete {
+  background-color: #e63946;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn-delete:hover {
+  background-color: #d62828;
+}
+
+
