@@ -38,9 +38,24 @@ const StudentProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/estudiantes/${id}`, form);
+      let updatedForm = { ...form };
+
+      if (form.nuevaFoto) {
+        const formData = new FormData();
+        formData.append("foto", form.nuevaFoto);
+
+        const uploadResponse = await axios.post(`/estudiantes/${id}/foto`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+
+        updatedForm.fotoUrl = uploadResponse.data.filename;
+      }
+
+      delete updatedForm.nuevaFoto;
+      await axios.put(`/estudiantes/${id}`, updatedForm);
       alert('Perfil actualizado con éxito');
       setEditMode(false);
+      setFotoUrl(updatedForm.fotoUrl);
     } catch (err) {
       console.error(err);
       alert('Error al actualizar');
@@ -111,21 +126,31 @@ const StudentProfile = () => {
             {renderInput('experiencia_previa', 'Experiencia Previa', 'number')}
             {renderInput('adaptabilidad', 'Adaptabilidad', 'number')}
             {renderInput('comunicacion', 'Comunicación', 'number')}
+
+            {editMode && (
+              <div className="row">
+                <label>Cambiar Foto</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setForm({ ...form, nuevaFoto: e.target.files[0] })}
+                />
+              </div>
+            )}
           </div>
 
           {fotoUrl && (
-  <div className="foto-estudiante">
-    <img
-      src={
-        fotoUrl.startsWith('http')
-          ? fotoUrl
-          : `https://gestion-estudiantes-backend-production.up.railway.app/estudiantes/fotos/${fotoUrl}`
-      }
-      alt="Foto del estudiante"
-    />
-  </div>
-)}
-
+            <div className="foto-estudiante">
+              <img
+                src={
+                  fotoUrl.startsWith('http')
+                    ? fotoUrl
+                    : `https://gestion-estudiantes-backend-production.up.railway.app/estudiantes/fotos/${fotoUrl}`
+                }
+                alt="Foto del estudiante"
+              />
+            </div>
+          )}
 
           {editMode ? (
             <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
