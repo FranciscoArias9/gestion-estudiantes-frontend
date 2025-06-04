@@ -1,56 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import axios from '../api/axiosConfig';
 import '../styles/RegisterStudent.css';
 import Select from 'react-select';
 
-
 const RegisterStudent = () => {
   const [form, setForm] = useState({
-    nombre: '',
-    apellido: '',
-    segundoApellido: '',
-    numero_identificacion: '',
-    correo: '',
-    genero: '',
-    tipo_maestria: '',
-    nacionalidad: '',
-    universidad_origen: '',
-    estado_estudiante: '',
-    notas_adicionales: '',
-    telefono: '',
-    adaptabilidad: '',
-    anio_admision: '',
-    anotaciones_estado: '',
-    carreras_universitarias: '',
-    comentario_exoneracion: '',
-    comunicacion: '',
-    experiencia_previa: '',
-    funcion_trabajo: '',
-    lugar_residencia: '',
-    lugar_trabajo: '',
-    modalidad: '',
-    motivacion_objetivos: '',
-    numero_promocion: '',
-    otras_observaciones: '',
-    programa_maestria: '',
-    solicitud_exoneracion: false,
-    tipo_empadronamiento: '',
-    grado_academico: '',
-
+    nombre: '', apellido: '', segundoApellido: '', numero_identificacion: '', correo: '',
+    genero: '', tipo_maestria: '', nacionalidad: '', universidad_origen: '', estado_estudiante: '',
+    notas_adicionales: '', telefono: '', adaptabilidad: '', anio_admision: '', anotaciones_estado: '',
+    carreras_universitarias: '', comentario_exoneracion: '', comunicacion: '', experiencia_previa: '',
+    funcion_trabajo: '', lugar_residencia: '', lugar_trabajo: '', modalidad: '', motivacion_objetivos: '',
+    numero_promocion: '', otras_observaciones: '', programa_maestria: '', solicitud_exoneracion: false,
+    tipo_empadronamiento: '', grado_academico: ''
   });
 
   const [foto, setFoto] = useState(null);
-
-  /////////
   const [nuevaCarrera, setNuevaCarrera] = useState('');
+  const [rol, setRol] = useState(null);
+  const [usuarioCargado, setUsuarioCargado] = useState(false);
+  const navigate = useNavigate();
 
-  /////////
+  useEffect(() => {
+    axios.get('/auth/actual')
+      .then(res => setRol(res.data.rol))
+      .catch(() => setRol(null))
+      .finally(() => setUsuarioCargado(true));
+  }, []);
+
   const agregarCarrera = () => {
     if (nuevaCarrera.trim() === '') return;
-    const carreras = form.carreras_universitarias
-      ? form.carreras_universitarias.split(', ')
-      : [];
+    const carreras = form.carreras_universitarias ? form.carreras_universitarias.split(', ') : [];
     if (!carreras.includes(nuevaCarrera.trim())) {
       const nuevasCarreras = [...carreras, nuevaCarrera.trim()].join(', ');
       setForm({ ...form, carreras_universitarias: nuevasCarreras });
@@ -58,13 +39,9 @@ const RegisterStudent = () => {
     setNuevaCarrera('');
   };
 
-
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    let newValue = value;
-    if (type === 'number') {
-      newValue = value === '' ? '' : parseInt(value);
-    }
+    let newValue = type === 'number' ? (value === '' ? '' : parseInt(value)) : value;
     setForm({ ...form, [name]: newValue });
   };
 
@@ -98,13 +75,27 @@ const RegisterStudent = () => {
     }
   };
 
+  if (!usuarioCargado) return <p>Cargando usuario...</p>;
+  if (rol !== 'encargado') {
+    return (
+      <div>
+        <Navbar />
+        <p style={{ color: 'red', fontWeight: 'bold', textAlign: 'center' }}>
+          🚫 Acceso denegado: solo los <u>usuarios encargados</u> pueden registrar estudiantes.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="register-container">
       <Navbar />
       <h2 className="register-title">Añadir alumno al sistema</h2>
-
       <div className="register-content">
         <form onSubmit={handleSubmit} className="register-form">
+
+
+
           <div className="form-grid">
             <input name="nombre" value={form.nombre} onChange={handleChange} placeholder="Nombre" />
             <input name="apellido" value={form.apellido} onChange={handleChange} placeholder="Primer apellido" />
@@ -252,7 +243,11 @@ const RegisterStudent = () => {
           </div>
 
           <button type="submit" className="register-btn">Añadir alumno al sistema</button>
-        </form>
+
+          
+
+          
+        </form>hh
       </div>
     </div>
   );
