@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import axios from '../api/axiosConfig';
 import Navbar from '../components/Navbar';
 import '../styles/RegisterTFG.css';
+import useUsuarioActual from '../components/useUsuarioActual';
 
 const RegisterTFG = () => {
+  
   const [estudiantes, setEstudiantes] = useState([]);
   const [selectedStudentId, setSelectedStudentId] = useState('');
   const [form, setForm] = useState({
@@ -22,6 +24,9 @@ const RegisterTFG = () => {
   });
 
   const [nuevoAsesor, setNuevoAsesor] = useState('');
+
+    const { usuario, cargando } = useUsuarioActual();
+    console.log(usuario.clasificacion);
 
   useEffect(() => {
     axios.get('/estudiantes').then(res => {
