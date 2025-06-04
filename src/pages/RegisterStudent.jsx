@@ -3,22 +3,9 @@ import Navbar from '../components/Navbar';
 import axios from '../api/axiosConfig';
 import '../styles/RegisterStudent.css';
 import Select from 'react-select';
-import useUsuarioActual from '../components/useUsuarioActual';
-
 
 
 const RegisterStudent = () => {
-
-const { usuario, cargando } = useUsuarioActual();
-
-  if (cargando) return <p>Cargando...</p>;
-
-  if (!usuario || usuario.clasificacion !== 'usuario_jefe') {
-    return <p style={{ color: 'red', fontWeight: 'bold' }}>
-      Acceso denegado: no tiene permisos para registrar estudiantes.
-    </p>;
-  }
-  
   const [form, setForm] = useState({
     nombre: '',
     apellido: '',
