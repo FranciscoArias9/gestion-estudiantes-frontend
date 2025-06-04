@@ -15,6 +15,8 @@ const RegisterStudent = () => {
   if (!usuario || usuario.clasificacion !== 'usuario_jefe') {
     return <p style={{ color: 'red', fontWeight: 'bold' }}>Acceso denegado: No tiene permisos para registrar estudiantes.</p>;
   }
+
+  console.log(usuario.clasificacion);
   const [form, setForm] = useState({
     nombre: '',
     apellido: '',
