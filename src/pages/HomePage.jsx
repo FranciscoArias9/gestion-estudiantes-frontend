@@ -29,6 +29,11 @@ const HomePage = () => {
           <div className="home-card" onClick={() => navigate('/perfil')}>
             👤 Revisar / editar mi perfil
           </div>
+
+          <div className="home-card" onClick={() => navigate('/encargados/registrar')}>
+             🧑‍💼 Registrar usuario encargado
+          </div>
+
         </div>
       </main>
 
