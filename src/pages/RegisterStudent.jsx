@@ -4,6 +4,7 @@ import axios from '../api/axiosConfig';
 import '../styles/RegisterStudent.css';
 import Select from 'react-select';
 
+
 const RegisterStudent = () => {
   const [form, setForm] = useState({
     nombre: '',
@@ -36,11 +37,15 @@ const RegisterStudent = () => {
     solicitud_exoneracion: false,
     tipo_empadronamiento: '',
     grado_academico: '',
+
   });
 
   const [foto, setFoto] = useState(null);
+
+  /////////
   const [nuevaCarrera, setNuevaCarrera] = useState('');
 
+  /////////
   const agregarCarrera = () => {
     if (nuevaCarrera.trim() === '') return;
     const carreras = form.carreras_universitarias
@@ -53,6 +58,7 @@ const RegisterStudent = () => {
     setNuevaCarrera('');
   };
 
+
   const handleChange = (e) => {
     const { name, value, type } = e.target;
     let newValue = value;
@@ -60,6 +66,10 @@ const RegisterStudent = () => {
       newValue = value === '' ? '' : parseInt(value);
     }
     setForm({ ...form, [name]: newValue });
+  };
+
+  const handleCheckboxChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.checked });
   };
 
   const handleFileChange = (e) => {
@@ -92,10 +102,10 @@ const RegisterStudent = () => {
     <div className="register-container">
       <Navbar />
       <h2 className="register-title">Añadir alumno al sistema</h2>
+
       <div className="register-content">
         <form onSubmit={handleSubmit} className="register-form">
-
-           <div className="form-grid">
+          <div className="form-grid">
             <input name="nombre" value={form.nombre} onChange={handleChange} placeholder="Nombre" />
             <input name="apellido" value={form.apellido} onChange={handleChange} placeholder="Primer apellido" />
             <input name="segundoApellido" value={form.segundoApellido} onChange={handleChange} placeholder="Segundo apellido" />
