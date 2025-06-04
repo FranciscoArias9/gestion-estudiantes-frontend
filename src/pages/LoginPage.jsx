@@ -13,9 +13,7 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const data = await login(correo, contrasena);
-      localStorage.setItem('token', data.token); // ✅ Guarda el token
-      localStorage.setItem('user', JSON.stringify(data.usuario));
-
+      localStorage.setItem('user', JSON.stringify(data));
       navigate('/home');
     } catch (err) {
       alert('Credenciales incorrectas');
