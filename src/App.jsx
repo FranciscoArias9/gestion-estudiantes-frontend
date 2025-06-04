@@ -9,6 +9,7 @@ import UserProfile from './pages/UserProfile';
 import RegisterTFG from './pages/RegisterTFG';
 import TFGList from './pages/ListaTFGs';
 import TFGDetail from './pages/TfgDetail';
+import RegisterEncargado from './pages/RegisterEncargado';
 
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/tfgs" element={<TFGList />} />
         <Route path="/tfgs/:id" element={<TFGDetail />} />
         <Route path="*" element={<LoginPage />} />
+        <Route path="/encargados/registrar" element={<RegisterEncargado />} />
       </Routes>
     </BrowserRouter>
   );
