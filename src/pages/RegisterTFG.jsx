@@ -25,8 +25,7 @@ const RegisterTFG = () => {
 
   const [nuevoAsesor, setNuevoAsesor] = useState('');
 
-    const { usuario, cargando } = useUsuarioActual();
-    console.log(usuario.clasificacion);
+    
 
   useEffect(() => {
     axios.get('/estudiantes').then(res => {
@@ -102,6 +101,15 @@ const RegisterTFG = () => {
       alert('Error al registrar TFG');
     }
   };
+
+  const { usuario, cargando } = useUsuarioActual();
+
+useEffect(() => {
+  if (usuario) {
+    console.log(usuario.clasificacion);
+  }
+}, [usuario]);
+
 
   return (
     <div className="register-container">
