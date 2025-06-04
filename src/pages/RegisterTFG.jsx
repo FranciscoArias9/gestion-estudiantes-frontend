@@ -1,9 +1,27 @@
 import { useEffect, useState } from 'react';
 import axios from '../api/axiosConfig';
 import Navbar from '../components/Navbar';
+import { useNavigate } from 'react-router-dom'; // ✅ Para redirigir si se quiere
 import '../styles/RegisterTFG.css';
 
 const RegisterTFG = () => {
+
+const user = JSON.parse(localStorage.getItem('user')); // ✅ Obtener usuario actual
+
+  // 🚫 Bloqueo si no es usuario_jefe
+  if (!user || user.clasificacion !== 'usuario_jefe') {
+    return (
+      <div className="register-container">
+        <Navbar />
+        <div className="register-content">
+          <h2 style={{ color: 'red', fontWeight: 'bold' }}>
+            Acceso denegado: Solo los usuarios con clasificación "usuario_jefe" pueden registrar TFGs.
+          </h2>
+        </div>
+      </div>
+    );
+  }
+  
   const [estudiantes, setEstudiantes] = useState([]);
   const [selectedStudentId, setSelectedStudentId] = useState('');
   const [form, setForm] = useState({
