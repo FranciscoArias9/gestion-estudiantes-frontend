@@ -2,22 +2,21 @@
 
 .register-container {
   padding: 2rem;
-  max-width: 900px;
+  max-width: 1000px; /* Antes era 900px o menos */
+  width: 100%;
   margin: auto;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   min-height: 100vh;
 }
 
-.register-title {
-  text-align: center;
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
-  color: #2c3e50;
+.register-content {
+  display: flex;
+  justify-content: center;
 }
 
 .register-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
+  width: 100%;
+  max-width: 800px; /* Ampliar formulario */
   background-color: #f9f9f9;
   padding: 2rem;
   border-radius: 12px;
