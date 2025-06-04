@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react';
 import axios from '../api/axiosConfig';
 import Navbar from '../components/Navbar';
 import '../styles/RegisterTFG.css';
-import useUsuarioActual from '../components/useUsuarioActual';
 
 const RegisterTFG = () => {
-  
   const [estudiantes, setEstudiantes] = useState([]);
   const [selectedStudentId, setSelectedStudentId] = useState('');
   const [form, setForm] = useState({
@@ -24,8 +22,6 @@ const RegisterTFG = () => {
   });
 
   const [nuevoAsesor, setNuevoAsesor] = useState('');
-
-    
 
   useEffect(() => {
     axios.get('/estudiantes').then(res => {
@@ -101,15 +97,6 @@ const RegisterTFG = () => {
       alert('Error al registrar TFG');
     }
   };
-
-  const { usuario, cargando } = useUsuarioActual();
-
-useEffect(() => {
-  if (usuario) {
-    console.log(usuario.clasificacion);
-  }
-}, [usuario]);
-
 
   return (
     <div className="register-container">
