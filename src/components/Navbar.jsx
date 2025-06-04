@@ -3,7 +3,7 @@ import '../styles/NavBar.css';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user')); // ✅ verificamos si el usuario está logueado
+  const user = JSON.parse(localStorage.getItem('user')); // ✅ leer usuario logueado
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -17,13 +17,22 @@ const Navbar = () => {
         <img src="/logo-eri.jpg" alt="ERI" className="logo logo-eri" />
       </div>
 
-      {user && ( // ✅ solo mostramos los enlaces si hay usuario
+      {user && (
         <ul className="navbar-links">
           <li onClick={() => navigate('/home')}>Página principal</li>
           <li onClick={() => navigate('/estudiantes')}>Lista de alumnos</li>
           <li onClick={() => navigate('/perfil')}>Ver mi perfil</li>
           <li onClick={handleLogout}>Hacer logout</li>
         </ul>
+      )}
+
+      {/* ✅ Mostrar la clasificación del usuario */}
+      {user?.clasificacion && (
+        <div className="navbar-user-info">
+          <small className="user-clasificacion">
+            Clasificación: <strong>{user.clasificacion}</strong>
+          </small>
+        </div>
       )}
     </nav>
   );
