@@ -144,10 +144,11 @@ const user = JSON.parse(localStorage.getItem('user')); // ✅ Obtener usuario ac
         <label>Modalidad del TFG</label>
         <select name="modalidadTFG" value={form.modalidadTFG} onChange={handleChange} required>
           <option value="">Seleccione una modalidad</option>
-          <option value="Tesis">Tesis</option>
+          <option value="Tesis Monográfica">Tesis</option>
           <option value="Proyecto">Proyecto</option>
           <option value="Seminario">Seminario</option>
           <option value="Práctica">Práctica</option>
+          <option value="Tesis en Artículos">Práctica</option>
         </select>
 
         <label>Fecha de aprobación</label>
