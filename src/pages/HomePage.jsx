@@ -10,7 +10,7 @@ const HomePage = () => {
       <Navbar />
       <main className="home-main">
         <h1>
-          ¡Bienvenido al Sistema de Seguimiento Estudiantil de Alumnos y Estudiantes de Posgrado!
+          ¡Bienvenido al Sistema de Seguimiento Estudiantil de Posgrado!
         </h1>
 
         <div className="home-options">
