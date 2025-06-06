@@ -24,7 +24,11 @@ const StudentCard = ({ estudiante }) => {
           <span>Sin foto</span>
         )}
       </td>
-      <td>{apellido1}</td>
+      <td>
+  <Link to={`/estudiantes/${estudiante.id}`} className="student-link">
+    {apellido1}
+  </Link>
+</td>
       <td>{apellido2}</td>
       <td>{estudiante.numero_identificacion}</td>
       <td>{estudiante.numero_promocion}</td>
