@@ -7,10 +7,9 @@ import { useNavigate } from 'react-router-dom';
 const RegisterEncargado = () => {
 
 
-  const navigate = useNavigate(); // 👈 para redirección opcional
-  const user = JSON.parse(localStorage.getItem('user')); // 👈 obtenemos el usuario actual
+  const navigate = useNavigate(); 
+  const user = JSON.parse(localStorage.getItem('user')); 
 
-  // 🚫 Si el usuario no está logueado o no es usuario_jefe, mostramos mensaje y evitamos mostrar el formulario
   if (!user || user.clasificacion !== 'usuario_jefe') {
     return (
       <div className="register-container">
