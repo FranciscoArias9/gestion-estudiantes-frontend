@@ -2,16 +2,16 @@ import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import axios from '../api/axiosConfig';
 import '../styles/RegisterStudent.css';
-import { useNavigate } from 'react-router-dom'; // 👈 necesario para redirigir
+import { useNavigate } from 'react-router-dom'; 
 import Select from 'react-select';
 
 
 const RegisterStudent = () => {
 
-  const navigate = useNavigate(); // 👈 para redirección opcional
-  const user = JSON.parse(localStorage.getItem('user')); // 👈 obtenemos el usuario actual
+  const navigate = useNavigate(); 
+  const user = JSON.parse(localStorage.getItem('user'));
 
-  // 🚫 Si el usuario no está logueado o no es usuario_jefe, mostramos mensaje y evitamos mostrar el formulario
+ 
   if (!user || user.clasificacion !== 'usuario_jefe') {
     return (
       <div className="register-container">
