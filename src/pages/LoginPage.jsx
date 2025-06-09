@@ -76,7 +76,7 @@ const LoginPage = () => {
               />
               <button type="submit">Iniciar sesión</button>
 
-              {/* Botón para recuperar contraseña */}
+              
               <button
                 type="button"
                 className="recuperar-contra-btn"
