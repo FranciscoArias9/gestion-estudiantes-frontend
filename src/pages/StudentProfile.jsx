@@ -68,7 +68,7 @@ const StudentProfile = () => {
   try {
     await axios.delete(`/estudiantes/${id}`);
     alert("Estudiante eliminado con éxito.");
-    window.location.href = "/estudiantes"; // o usá navigate si tenés react-router v6+
+    window.location.href = "/estudiantes";
   } catch (error) {
     console.error(error);
     alert("Hubo un error al eliminar el estudiante.");
