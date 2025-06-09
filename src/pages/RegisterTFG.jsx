@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import axios from '../api/axiosConfig';
 import Navbar from '../components/Navbar';
-import { useNavigate } from 'react-router-dom'; // ✅ Para redirigir si se quiere
+import { useNavigate } from 'react-router-dom'; 
 import '../styles/RegisterTFG.css';
 
 const RegisterTFG = () => {
 
-const user = JSON.parse(localStorage.getItem('user')); // ✅ Obtener usuario actual
+const user = JSON.parse(localStorage.getItem('user')); 
 
-  // 🚫 Bloqueo si no es usuario_jefe
+  
   if (!user || user.clasificacion !== 'usuario_jefe') {
     return (
       <div className="register-container">
