@@ -3,7 +3,7 @@ import '../styles/NavBar.css';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user')); // ✅ leer usuario logueado
+  const user = JSON.parse(localStorage.getItem('user')); 
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -26,7 +26,7 @@ const Navbar = () => {
         </ul>
       )}
 
-      {/* ✅ Mostrar la clasificación del usuario */}
+      
       {user?.clasificacion && (
         <div className="navbar-user-info">
           <small className="user-clasificacion">
