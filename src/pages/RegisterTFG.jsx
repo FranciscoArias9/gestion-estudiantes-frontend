@@ -1,14 +1,17 @@
+// Importación de hooks, axios y componentes necesarios
 import { useEffect, useState } from 'react';
 import axios from '../api/axiosConfig';
 import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom'; 
 import '../styles/RegisterTFG.css';
 
+// Componente para registrar un nuevo TFG
 const RegisterTFG = () => {
 
-const user = JSON.parse(localStorage.getItem('user')); 
+  // Se obtiene el usuario logueado desde el localStorage
+  const user = JSON.parse(localStorage.getItem('user')); 
 
-  
+  // Validación de acceso: solo los usuarios con clasificación 'usuario_jefe' pueden acceder
   if (!user || user.clasificacion !== 'usuario_jefe') {
     return (
       <div className="register-container">
@@ -21,7 +24,8 @@ const user = JSON.parse(localStorage.getItem('user'));
       </div>
     );
   }
-  
+
+  // Estados para estudiantes y formulario
   const [estudiantes, setEstudiantes] = useState([]);
   const [selectedStudentId, setSelectedStudentId] = useState('');
   const [form, setForm] = useState({
@@ -39,14 +43,16 @@ const user = JSON.parse(localStorage.getItem('user'));
     tipo_maestria: ''
   });
 
-  const [nuevoAsesor, setNuevoAsesor] = useState('');
+  const [nuevoAsesor, setNuevoAsesor] = useState(''); // Campo auxiliar para agregar asesores
 
+  // Obtiene lista de estudiantes al cargar el componente
   useEffect(() => {
     axios.get('/estudiantes').then(res => {
       setEstudiantes(res.data);
     });
   }, []);
 
+  // Cuando se selecciona un estudiante, se autocompletan sus datos en el formulario
   const handleStudentChange = (e) => {
     const estudianteId = e.target.value;
     setSelectedStudentId(estudianteId);
@@ -63,10 +69,12 @@ const user = JSON.parse(localStorage.getItem('user'));
     }
   };
 
+  // Manejador de cambios para inputs
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Agrega un asesor al equipo (evita duplicados)
   const agregarAsesor = () => {
     if (nuevoAsesor.trim() === '') return;
     if (!form.equipoAsesor.includes(nuevoAsesor.trim())) {
@@ -78,6 +86,7 @@ const user = JSON.parse(localStorage.getItem('user'));
     }
   };
 
+  // Elimina un asesor del equipo
   const eliminarAsesor = (nombre) => {
     setForm({
       ...form,
@@ -85,16 +94,18 @@ const user = JSON.parse(localStorage.getItem('user'));
     });
   };
 
+  // Envío del formulario al backend
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token'); // Token de autenticación
 
+    // Se construye el objeto a enviar al backend
     const payload = {
       tema: form.tema,
       tipo_maestria: form.tipo_maestria,
       modalidadTfg: form.modalidadTFG,
       fechaAprobacion: form.fechaAprobacion,
-      equipoAsesor: form.equipoAsesor.join(', '),
+      equipoAsesor: form.equipoAsesor.join(', '), // Asesores como string
       fechaVencimiento: form.fechaVencimiento,
       status: form.status,
       notasSeguimiento: form.notasSeguimiento,
@@ -103,6 +114,7 @@ const user = JSON.parse(localStorage.getItem('user'));
       }
     };
 
+    // Se envía la petición POST
     try {
       await axios.post('/tfgs', payload, {
         headers: {
@@ -116,11 +128,13 @@ const user = JSON.parse(localStorage.getItem('user'));
     }
   };
 
+  // Renderizado del formulario
   return (
     <div className="register-container">
       <Navbar />
       <h2 className="register-title">Registrar nuevo TFG</h2>
       <form onSubmit={handleSubmit} className="register-tfg-form">
+        {/* Selección de estudiante */}
         <label>Estudiante</label>
         <select value={selectedStudentId} onChange={handleStudentChange} required>
           <option value="">Seleccione estudiante</option>
@@ -129,6 +143,7 @@ const user = JSON.parse(localStorage.getItem('user'));
           ))}
         </select>
 
+        {/* Campos autocompletados del estudiante */}
         <label>Correo electrónico</label>
         <input name="correo" value={form.correo} readOnly placeholder="Correo" />
 
@@ -138,6 +153,7 @@ const user = JSON.parse(localStorage.getItem('user'));
         <label>Modalidad de la Maestría</label>
         <input name="tipo_maestria" value={form.tipo_maestria} readOnly placeholder="Modalidad de la Maestría" />
 
+        {/* Campos del TFG */}
         <label>Tema del TFG</label>
         <input name="tema" value={form.tema} onChange={handleChange} placeholder="Tema del TFG" required />
 
@@ -154,6 +170,7 @@ const user = JSON.parse(localStorage.getItem('user'));
         <label>Fecha de aprobación</label>
         <input name="fechaAprobacion" type="date" value={form.fechaAprobacion} onChange={handleChange} required />
 
+        {/* Equipo asesor con botones dinámicos */}
         <label>Equipo asesor</label>
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           <input
@@ -164,6 +181,8 @@ const user = JSON.parse(localStorage.getItem('user'));
           />
           <button type="button" onClick={agregarAsesor}>Añadir</button>
         </div>
+
+        {/* Chips de asesores añadidos */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', marginTop: '10px' }}>
           {form.equipoAsesor.map((asesor, index) => (
             <div key={index} style={{
@@ -191,6 +210,7 @@ const user = JSON.parse(localStorage.getItem('user'));
           ))}
         </div>
 
+        {/* Campos adicionales */}
         <label>Fecha de vencimiento</label>
         <input name="fechaVencimiento" type="date" value={form.fechaVencimiento} onChange={handleChange} />
 
