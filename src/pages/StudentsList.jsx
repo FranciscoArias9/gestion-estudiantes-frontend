@@ -12,7 +12,19 @@ const StudentsList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getEstudiantes().then(res => setEstudiantes(res.data));
+    getEstudiantes()
+      .then(res => {
+        if (Array.isArray(res.data)) {
+          setEstudiantes(res.data);
+        } else {
+          console.error("❌ La respuesta del backend no es un array:", res.data);
+          setEstudiantes([]);
+        }
+      })
+      .catch(err => {
+        console.error("❌ Error al obtener estudiantes:", err);
+        setEstudiantes([]);
+      });
   }, []);
 
   const filteredEstudiantes = estudiantes.filter(est =>
@@ -34,9 +46,8 @@ const StudentsList = () => {
       <div className="students-header">
         <h2>Lista de alumnos y postulantes</h2>
         <div className="students-actions">
-         {/* <button className="export-btn" onClick={handleExportPDF}>📄 Exportar como PDF</button>
-<button className="export-btn" onClick={handleExportExcel}>📊 Exportar como Excel</button> */}
 
+          {/* Campo para cambiar el criterio de búsqueda */}
           <select
             className="search-bar"
             value={searchField}
@@ -48,6 +59,7 @@ const StudentsList = () => {
             <option value="apellidos">Buscar por Apellidos</option>
           </select>
 
+          {/* Campo de texto para buscar */}
           <input
             type="text"
             placeholder="🔍 Buscar"
@@ -56,12 +68,14 @@ const StudentsList = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
+          {/* Botón para registrar nuevo estudiante */}
           <button className="add-btn" onClick={() => navigate('/estudiantes/registrar')}>
             + Añadir nuevo alumno
           </button>
         </div>
       </div>
 
+      {/* Tabla de estudiantes */}
       <div className="students-table-wrapper">
         <table className="students-table">
           <thead>
