@@ -1,15 +1,16 @@
+// Hooks y dependencias necesarias
 import { useState } from 'react';
-import axios from '../api/axiosConfig';
-import Navbar from '../components/Navbar';
-import '../styles/RegisterEncargado.css';
-import { useNavigate } from 'react-router-dom';
+import axios from '../api/axiosConfig'; // Instancia preconfigurada de Axios
+import Navbar from '../components/Navbar'; // Barra de navegación superior
+import '../styles/RegisterEncargado.css'; // Estilos específicos para esta vista
+import { useNavigate } from 'react-router-dom'; // Navegación entre rutas
 
+// Componente para registrar un nuevo usuario encargado
 const RegisterEncargado = () => {
+  const navigate = useNavigate(); // Hook para redireccionar programáticamente
+  const user = JSON.parse(localStorage.getItem('user')); // Recupera el usuario autenticado desde localStorage
 
-
-  const navigate = useNavigate(); 
-  const user = JSON.parse(localStorage.getItem('user')); 
-
+  // Solo los usuarios con clasificación 'usuario_jefe' pueden acceder a esta vista
   if (!user || user.clasificacion !== 'usuario_jefe') {
     return (
       <div className="register-container">
@@ -22,7 +23,8 @@ const RegisterEncargado = () => {
       </div>
     );
   }
-  
+
+  // Estado para el formulario del nuevo encargado
   const [form, setForm] = useState({
     nombre: '',
     apellidos: '',
@@ -32,16 +34,19 @@ const RegisterEncargado = () => {
     clasificacion: '',
   });
 
+  // Maneja los cambios en los campos del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+    setForm({ ...form, [name]: value }); // Actualiza el campo correspondiente
   };
 
+  // Envía los datos al backend para registrar un nuevo encargado
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Previene el comportamiento por defecto del formulario
     try {
-      await axios.post('/encargado', form);
-      alert('Encargado registrado con éxito');
+      await axios.post('/encargado', form); // Realiza la solicitud POST al backend
+      alert('Encargado registrado con éxito'); // Notifica éxito al usuario
+      // Limpia el formulario después del envío exitoso
       setForm({
         nombre: '',
         apellidos: '',
@@ -51,14 +56,16 @@ const RegisterEncargado = () => {
         clasificacion: '',
       });
     } catch (error) {
+      // Manejo de errores
       console.error('Error al registrar encargado:', error);
       alert('Error al registrar encargado');
     }
   };
 
+  // Renderizado del formulario
   return (
     <div className="register-container">
-      <Navbar />
+      <Navbar /> {/* Barra de navegación */}
       <h2 className="register-title">Registrar nuevo encargado</h2>
       <form onSubmit={handleSubmit} className="register-form">
         <input name="nombre" value={form.nombre} onChange={handleChange} placeholder="Nombre" required />
@@ -66,15 +73,19 @@ const RegisterEncargado = () => {
         <input name="correo" type="email" value={form.correo} onChange={handleChange} placeholder="Correo" required />
         <input name="contrasena" type="password" value={form.contrasena} onChange={handleChange} placeholder="Contraseña" required />
         <input name="puesto" value={form.puesto} onChange={handleChange} placeholder="Puesto" required />
+        
+        {/* Selector de clasificación */}
         <select name="clasificacion" value={form.clasificacion} onChange={handleChange} required>
           <option value="">Seleccione clasificación</option>
           <option value="usuario_jefe">Usuario jefe</option>
           <option value="usuario_auxiliar">Usuario auxiliar</option>
         </select>
+
         <button type="submit" className="register-btn">Registrar encargado</button>
       </form>
     </div>
   );
 };
 
+// Exporta el componente para que pueda ser usado en las rutas
 export default RegisterEncargado;
