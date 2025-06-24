@@ -1,1 +1,1 @@
-
+El presente proyecto consiste en un sistema desarrollado para la escuela de Relaciones Internacionales de la Universidad Nacional de Costa Rica, realizado por mi persona Francisco Arias Sanabria como parte de su práctica profesional universitario. El sistema es en especifico creado para el departamente de posgrados de esta escuela con el objetivo de administrar consultas de estudiantes y TFGs, con el objetivo de agiulizar estos procesos. Fue creado con Java/Springboot en el backend, React en el frontend y MariaDB en la base de datos.
